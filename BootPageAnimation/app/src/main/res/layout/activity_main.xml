@@ -8,12 +8,31 @@
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
-    <ImageView
-        android:id="@+id/imageView"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:scaleX="0.5"
-        android:scaleY="0.5"
-        android:src="@drawable/img_31"/>
+        android:onClick="startAnim"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="开始动画"/>
+
+    <com.lily.animation.AnimationOne
+        android:id="@+id/anim_one_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp"/>
+
+    <com.lily.animation.AnimationTwo
+        android:id="@+id/anim_two_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp" />
+
+    <ImageView
+        android:id="@+id/img_hand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_2"
+        android:visibility="gone"/>
 </FrameLayout>
