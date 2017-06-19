@@ -1,5 +1,8 @@
 package com.lily.animation;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
@@ -98,6 +101,8 @@ public class BootPageAnimActivity extends Activity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 android.util.Log.w(TAG, "--------------> Second onAnimationEnd");
+                ivAnimLayerTwo.startDrawMobilePhonePic(true, param);
+                playHandAnim();
 //                playFrameAnimation();//// TODO: 17/6/19 rape flower
             }
 
@@ -120,7 +125,7 @@ public class BootPageAnimActivity extends Activity {
             e.printStackTrace();
         }
         frameAnimation.setOneShot(true);
-        ivAnimLayerFour.setImageDrawable(frameAnimation);
+//        ivAnimLayerFour.setImageDrawable(frameAnimation);// TODO: 17/6/19
     }
 
     /**
@@ -163,14 +168,55 @@ public class BootPageAnimActivity extends Activity {
         ivAnimLayerFour.setVisibility(View.GONE);
     }
 
+    private void playHandAnim() {
+        if (ivAnimLayerFour.getVisibility() != View.VISIBLE) {
+            ivAnimLayerFour.setVisibility(View.VISIBLE);
+        }
+
+        int translationX = 80;
+        int translationY = 80;
+
+        AnimatorSet set = new AnimatorSet();
+        //包含平移、缩放和透明度动画
+        set.playTogether(
+                ObjectAnimator.ofFloat(ivAnimLayerFour, "scaleX", 0.6f, 0.6f),
+                ObjectAnimator.ofFloat(ivAnimLayerFour, "scaleY", 0.6f, 0.6f),
+                ObjectAnimator.ofFloat(ivAnimLayerFour, "alpha", 0.25f, 0.5f, 0.75f,1f),
+                ObjectAnimator.ofFloat(ivAnimLayerFour, "translationX", translationX, 0),
+                ObjectAnimator.ofFloat(ivAnimLayerFour, "translationY", translationY, 0)
+        );
+        //动画周期为500ms
+        set.setDuration(500).start();
+        //为动画加上事件监听，当动画结束的时候，开始另一个动画
+        set.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
     /**
      * 播放动画
      */
     int param = 0;
     public void startAnim(View view) {
-//        playScaleAnimationFirst();
-//        resetFrameAnimation();
-        param = param + 8;
-        ivAnimLayerTwo.startDrawMobilePhonePic(true, param);
+        playScaleAnimationFirst();
+        resetFrameAnimation();
     }
 }

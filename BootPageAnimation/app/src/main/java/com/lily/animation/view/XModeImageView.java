@@ -54,7 +54,7 @@ public class XModeImageView extends ImageView{
         mPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_ATOP));
 
         originBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.boot_page_img_mobile_phone);
-        float scale = (float) 0.6;
+        float scale = (float) 0.7;
         newBitmap = scaleBitmap(originBitmap, scale);
     }
 
@@ -70,7 +70,7 @@ public class XModeImageView extends ImageView{
 
             float left = (float) (getWidth() - newBitmap.getWidth()) / 2;
             android.util.Log.w(TAG, "param = " + param);
-            float top = (float) getHeight() / 2 + newBitmap.getHeight() / param;
+                float top = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
             canvas.drawBitmap(newBitmap, left, top, mPaint);
         }
     }
