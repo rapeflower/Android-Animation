@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.lily.animation.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="startAnim"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="开始动画"/>
+
+    <com.lily.animation.view.AnimationOne
+        android:id="@+id/anim_one_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp"/>
+
+    <com.lily.animation.view.AnimationTwo
+        android:id="@+id/anim_two_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="150dp" />
+
+    <ImageView
+        android:id="@+id/img_hand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|right"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/img_2"
+        android:visibility="gone"/>
+</FrameLayout>
