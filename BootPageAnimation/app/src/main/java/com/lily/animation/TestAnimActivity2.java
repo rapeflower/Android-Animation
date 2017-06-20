@@ -3,33 +3,25 @@ package com.lily.animation;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.res.Resources;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 
 import com.lily.animation.view.XModeImageView;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Author on 17/6/19.
  */
 
-public class BootPageAnimActivity extends Activity {
+public class TestAnimActivity2 extends Activity {
 
     ImageView ivAnimLayerOne;
     XModeImageView ivAnimLayerTwo;
     ImageView ivAnimLayerFour;
-    ScaleAnimation scaleAnimationFirst;
-    ScaleAnimation scaleAnimationSecond;
+    AnimatorSet animatorSetFirst;
+    AnimatorSet animatorSetSecond;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -38,7 +30,7 @@ public class BootPageAnimActivity extends Activity {
         initWidget();
         initAnimation();
 
-        playScaleAnimationFirst();
+        playBaseAnimFirst();
     }
 
     /**
@@ -59,78 +51,83 @@ public class BootPageAnimActivity extends Activity {
     }
 
     private void scaleAnimFirst() {
-        /** 设置缩放动画 */
-        scaleAnimationFirst =new ScaleAnimation(0.4f, 0.9f, 0.4f, 0.9f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimationFirst.setDuration(1200);//设置动画持续时间
-        scaleAnimationFirst.setFillAfter(true);//动画执行完后是否停留在执行完的状态
-        //scaleAnimationFirst.setStartOffset(500);//执行前的等待时间
-        scaleAnimationFirst.setAnimationListener(new Animation.AnimationListener() {
+        animatorSetFirst = new AnimatorSet();
+        //包含第一段放大动画
+        animatorSetFirst.playTogether(
+                ObjectAnimator.ofFloat(ivAnimLayerOne, "scaleX", 0.4f, 0.9f),
+                ObjectAnimator.ofFloat(ivAnimLayerOne, "scaleY", 0.4f, 0.9f)
+        );
+        //动画周期为500ms
+        animatorSetFirst.setDuration(750).start();
+        animatorSetFirst.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animator animation) {
 
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                android.util.Log.w(TAG, "--------------> First onAnimationEnd");
-                playScaleAnimationSecond();
+            public void onAnimationEnd(Animator animation) {
+                playBaseAnimSecond();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         });
     }
 
     private void scaleAnimSecond() {
-        /** 设置缩放动画 */
-        scaleAnimationSecond =new ScaleAnimation(0.9f, 0.7f, 0.9f, 0.7f,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimationSecond.setDuration(300);//设置动画持续时间
-        scaleAnimationSecond.setFillAfter(true);//动画执行完后是否停留在执行完的状态
-        scaleAnimationSecond.setAnimationListener(new Animation.AnimationListener() {
+        animatorSetSecond = new AnimatorSet();
+        //第二段缩小动画度动画
+        animatorSetSecond.playTogether(
+                ObjectAnimator.ofFloat(ivAnimLayerOne, "scaleX", 0.9f, 0.7f),
+                ObjectAnimator.ofFloat(ivAnimLayerOne, "scaleY", 0.9f, 0.7f)
+        );
+        //动画周期为500ms
+        animatorSetSecond.setDuration(750);
+        animatorSetSecond.addListener(new Animator.AnimatorListener() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void onAnimationStart(Animator animation) {
 
             }
 
             @Override
-            public void onAnimationEnd(Animation animation) {
-                android.util.Log.w(TAG, "--------------> Second onAnimationEnd");
-                ivAnimLayerTwo.startDrawMobilePhonePic(true, param);
+            public void onAnimationEnd(Animator animation) {
                 playHandAnim();
             }
 
             @Override
-            public void onAnimationRepeat(Animation animation) {
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
 
             }
         });
     }
 
-    /**
-     * 开始播放缩放动画(第一段)
-     */
-    private void playScaleAnimationFirst() {
-        ivAnimLayerOne.clearAnimation();
-        ivAnimLayerOne.startAnimation(scaleAnimationFirst);
-
-        ivAnimLayerTwo.clearAnimation();
-        ivAnimLayerTwo.startAnimation(scaleAnimationFirst);
+    private void playBaseAnimFirst() {
+        if (animatorSetFirst.isRunning()) {
+            animatorSetFirst.cancel();
+        }
+        animatorSetFirst.start();
     }
 
-    /**
-     * 开始播放缩放动画(第二段)
-     */
-    private void playScaleAnimationSecond() {
-        ivAnimLayerOne.clearAnimation();
-        ivAnimLayerOne.startAnimation(scaleAnimationSecond);
-
-        ivAnimLayerTwo.clearAnimation();
-        ivAnimLayerTwo.startAnimation(scaleAnimationSecond);
+    private void playBaseAnimSecond() {
+        if (animatorSetSecond.isRunning()) {
+            animatorSetSecond.cancel();
+        }
+        animatorSetSecond.start();
     }
+
 
     private void playHandAnim() {
         if (ivAnimLayerFour.getVisibility() != View.VISIBLE) {
@@ -173,14 +170,15 @@ public class BootPageAnimActivity extends Activity {
 
             }
         });
+
+        set.cancel();
     }
 
     /**
      * 播放动画
      */
-    int param = 0;
+
     public void startAnim(View view) {
-        ivAnimLayerFour.setVisibility(View.GONE);
-        playScaleAnimationFirst();
+        playBaseAnimFirst();
     }
 }

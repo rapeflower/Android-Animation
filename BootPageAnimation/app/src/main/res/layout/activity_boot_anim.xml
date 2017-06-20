@@ -23,6 +23,7 @@
         android:id="@+id/iv_anim_layer_two"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginBottom="120dp"
         android:src="@drawable/boot_page_img_circle"
         android:visibility="visible"/>

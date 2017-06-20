@@ -3,7 +3,6 @@ package com.lily.animation;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.drawable.AnimationDrawable;
@@ -23,13 +22,14 @@ import static android.content.ContentValues.TAG;
  * Created by Author on 17/6/19.
  */
 
-public class BootPageAnimActivity extends Activity {
+public class TestAnimActivity1 extends Activity {
 
     ImageView ivAnimLayerOne;
     XModeImageView ivAnimLayerTwo;
     ImageView ivAnimLayerFour;
     ScaleAnimation scaleAnimationFirst;
     ScaleAnimation scaleAnimationSecond;
+    AnimationDrawable frameAnimation;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,15 +56,16 @@ public class BootPageAnimActivity extends Activity {
     private void initAnimation() {
         scaleAnimFirst();
         scaleAnimSecond();
+//        frameAnimation();// TODO: 2017/6/19 rape flower
     }
 
     private void scaleAnimFirst() {
         /** 设置缩放动画 */
         scaleAnimationFirst =new ScaleAnimation(0.4f, 0.9f, 0.4f, 0.9f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimationFirst.setDuration(1200);//设置动画持续时间
+        scaleAnimationFirst.setDuration(1000);//设置动画持续时间
         scaleAnimationFirst.setFillAfter(true);//动画执行完后是否停留在执行完的状态
-        //scaleAnimationFirst.setStartOffset(500);//执行前的等待时间
+        scaleAnimationFirst.setStartOffset(1000);//执行前的等待时间
         scaleAnimationFirst.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -88,8 +89,9 @@ public class BootPageAnimActivity extends Activity {
         /** 设置缩放动画 */
         scaleAnimationSecond =new ScaleAnimation(0.9f, 0.7f, 0.9f, 0.7f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimationSecond.setDuration(300);//设置动画持续时间
+        scaleAnimationSecond.setDuration(1000);//设置动画持续时间
         scaleAnimationSecond.setFillAfter(true);//动画执行完后是否停留在执行完的状态
+        //scaleAnimationSecond.setStartOffset(1000);//执行前的等待时间
         scaleAnimationSecond.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -101,6 +103,7 @@ public class BootPageAnimActivity extends Activity {
                 android.util.Log.w(TAG, "--------------> Second onAnimationEnd");
                 ivAnimLayerTwo.startDrawMobilePhonePic(true, param);
                 playHandAnim();
+//                playFrameAnimation();//// TODO: 17/6/19 rape flower
             }
 
             @Override
@@ -108,6 +111,21 @@ public class BootPageAnimActivity extends Activity {
 
             }
         });
+    }
+
+    private void frameAnimation() {
+        frameAnimation = new AnimationDrawable();
+        try {
+            for (int i = 2; i >= 0; i--) {
+                int id = getResources().getIdentifier("img_" + i, "drawable", getPackageName());//-hdpi
+                Drawable drawable = getResources().getDrawable(id);
+                frameAnimation.addFrame(drawable, 200);
+            }
+        } catch (Resources.NotFoundException e) {
+            e.printStackTrace();
+        }
+        frameAnimation.setOneShot(true);
+        ivAnimLayerFour.setImageDrawable(frameAnimation);
     }
 
     /**
@@ -130,6 +148,24 @@ public class BootPageAnimActivity extends Activity {
 
         ivAnimLayerTwo.clearAnimation();
         ivAnimLayerTwo.startAnimation(scaleAnimationSecond);
+    }
+
+    /**
+     * 开始播放贞动画
+     */
+    private void playFrameAnimation() {
+        ivAnimLayerFour.setVisibility(View.VISIBLE);
+        if (!frameAnimation.isRunning()) {
+            frameAnimation.start();
+        }
+    }
+
+    /**
+     * 重置贞动画
+     */
+    private void resetFrameAnimation() {
+        frameAnimation.stop();
+        ivAnimLayerFour.setVisibility(View.GONE);
     }
 
     private void playHandAnim() {
@@ -173,6 +209,8 @@ public class BootPageAnimActivity extends Activity {
 
             }
         });
+
+        set.cancel();
     }
 
     /**
@@ -180,7 +218,7 @@ public class BootPageAnimActivity extends Activity {
      */
     int param = 0;
     public void startAnim(View view) {
-        ivAnimLayerFour.setVisibility(View.GONE);
         playScaleAnimationFirst();
+        resetFrameAnimation();
     }
 }
