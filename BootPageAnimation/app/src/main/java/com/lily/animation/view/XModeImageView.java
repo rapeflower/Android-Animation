@@ -27,6 +27,8 @@ public class XModeImageView extends ImageView{
     private boolean isNeedDraw = false;
     Bitmap originBitmap = null;
     Bitmap newBitmap = null;
+    float dy = Float.NaN;
+    boolean mAttached = false;
 
     public XModeImageView(Context context) {
         this(context, null);
@@ -59,6 +61,14 @@ public class XModeImageView extends ImageView{
     }
 
     @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        //
+        dy = getHeight() / 2 - 100;
+        android.util.Log.w(TAG, "dy 1 = " + dy);
+    }
+
+    @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
@@ -69,8 +79,9 @@ public class XModeImageView extends ImageView{
             android.util.Log.w(TAG, "getHeight = " + newBitmap.getHeight());
 
             float left = (float) (getWidth() - newBitmap.getWidth()) / 2;
-            android.util.Log.w(TAG, "param = " + param);
-                float top = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
+            float top = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
+            android.util.Log.w(TAG, "dy 2 = " + dy);
+//            canvas.translate(0, dy);
             canvas.drawBitmap(newBitmap, left, top, mPaint);
         }
     }
@@ -87,11 +98,32 @@ public class XModeImageView extends ImageView{
      *
      * @param isNeedDraw
      */
+    int base = 100;
     public void startDrawMobilePhonePic(boolean isNeedDraw, int parameter) {
         this.isNeedDraw = isNeedDraw;
         this.param = parameter;
+
+//        if (mAttached) {
+//            post(r);
+//        } else {
+//            Handler handler = new Handler();
+//            handler.post(r);
+//        }
         invalidate();
     }
+
+    private Runnable r = new Runnable() {
+        @Override
+        public void run() {
+            android.util.Log.w(TAG, "base 1 = " + base);
+            if (base > 200) {
+                return;
+            }
+            base = base + 20;
+            android.util.Log.w(TAG, "base 2 = " + base);
+            dy = getHeight() / 2 - base;
+        }
+    };
 
     /**
      * 按比例缩放图片
@@ -115,5 +147,17 @@ public class XModeImageView extends ImageView{
         origin.recycle();
 
         return newBM;
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        mAttached = true;
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        mAttached = false;
     }
 }
