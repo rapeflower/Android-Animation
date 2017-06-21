@@ -5,6 +5,8 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -20,9 +22,8 @@ import static android.R.attr.translationY;
 import static android.content.ContentValues.TAG;
 
 /**
- * Created by Author on 17/6/19.
+ * Created by rape flower on 17/6/19.
  */
-
 public class BootPageAnimActivity extends Activity {
 
     ImageView ivAnimLayerOne;
@@ -35,8 +36,56 @@ public class BootPageAnimActivity extends Activity {
     ImageView ivAnimLayerFracture;//'折'
     ImageView ivAnimLayerTextOne;//'全新首页'
     ImageView ivAnimLayerTextTwo;//'让你体验不一样的电商'
-    ScaleAnimation scaleAnimationFirst;
-    ScaleAnimation scaleAnimationSecond;
+    ScaleAnimation scaleAnimationFirst = null;
+    ScaleAnimation scaleAnimationSecond = null;
+
+    /**
+     * Message What
+     */
+    private static final int MSG_GLOBAL_PURCHASE = 1;
+    private static final int MSG_MUTUAL_AID_CIRCLE = 2;
+    private static final int MSG_SIGN = 3;
+    private static final int MSG_FRACTURE = 4;
+    /**
+     * '全球购'、'互助圈'、'签到'、'折'的晃动动偏移量
+     * 单位像素(px)
+     */
+    private static final int OFFSET_GLOBAL_PURCHASE = 20;
+    private static final int OFFSET_MUTUAL_AID_CIRCLE = 18;
+    private static final int OFFSET_SIGN = 15;
+    private static final int OFFSET_FRACTURE = 10;
+    /**
+     * '全球购'、'互助圈'、'签到'、'折'的晃动动画时间
+     * 单位毫秒(ms)
+     */
+    private static final long DURATION_GLOBAL_PURCHASE = 800;
+    private static final long DURATION_MUTUAL_AID_CIRCLE = 700;
+    private static final long DURATION_SIGN = 600;
+    private static final long DURATION_FRACTURE = 1000;
+
+    /**
+     * Handler
+     */
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            switch (msg.what) {
+                case MSG_GLOBAL_PURCHASE:
+                    playShakeAnim(ivAnimLayerGlobalPurchase, MSG_GLOBAL_PURCHASE, OFFSET_GLOBAL_PURCHASE, DURATION_GLOBAL_PURCHASE);
+                    break;
+                case MSG_MUTUAL_AID_CIRCLE:
+                    playShakeAnim(ivAnimLayerMutualAidCircle, MSG_MUTUAL_AID_CIRCLE, OFFSET_MUTUAL_AID_CIRCLE, DURATION_MUTUAL_AID_CIRCLE);
+                    break;
+                case MSG_SIGN:
+                    playShakeAnim(ivAnimLayerSign, MSG_SIGN, OFFSET_SIGN, DURATION_SIGN);
+                    break;
+                case MSG_FRACTURE:
+                    playShakeAnim(ivAnimLayerFracture, MSG_FRACTURE, OFFSET_FRACTURE, DURATION_FRACTURE);
+                    break;
+            }
+            return false;
+        }
+    });
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -238,6 +287,7 @@ public class BootPageAnimActivity extends Activity {
         if (ivAnimLayerGlobalPurchase.getVisibility() != View.VISIBLE) {
             ivAnimLayerGlobalPurchase.setVisibility(View.VISIBLE);
         }
+        ivAnimLayerGlobalPurchase.clearAnimation();
 
         AnimatorSet globalPurchaseSet = new AnimatorSet();
         //包含平移、缩放和透明度动画
@@ -250,6 +300,27 @@ public class BootPageAnimActivity extends Activity {
         );
         //动画周期为500ms
         globalPurchaseSet.setDuration(500).start();
+        globalPurchaseSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                playShakeAnim(ivAnimLayerGlobalPurchase, MSG_GLOBAL_PURCHASE, OFFSET_GLOBAL_PURCHASE, DURATION_GLOBAL_PURCHASE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     /**
@@ -260,6 +331,7 @@ public class BootPageAnimActivity extends Activity {
         if (ivAnimLayerMutualAidCircle.getVisibility() != View.VISIBLE) {
             ivAnimLayerMutualAidCircle.setVisibility(View.VISIBLE);
         }
+        ivAnimLayerMutualAidCircle.clearAnimation();
 
         AnimatorSet mutualAidCircleSet = new AnimatorSet();
         //包含平移、缩放和透明度动画
@@ -272,6 +344,27 @@ public class BootPageAnimActivity extends Activity {
         );
         //动画周期为500ms
         mutualAidCircleSet.setDuration(500).start();
+        mutualAidCircleSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                playShakeAnim(ivAnimLayerMutualAidCircle, MSG_MUTUAL_AID_CIRCLE, OFFSET_MUTUAL_AID_CIRCLE, DURATION_MUTUAL_AID_CIRCLE);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     /**
@@ -282,6 +375,7 @@ public class BootPageAnimActivity extends Activity {
         if (ivAnimLayerSign.getVisibility() != View.VISIBLE) {
             ivAnimLayerSign.setVisibility(View.VISIBLE);
         }
+        ivAnimLayerSign.clearAnimation();
 
         AnimatorSet signSet = new AnimatorSet();
         //包含平移、缩放和透明度动画
@@ -294,6 +388,27 @@ public class BootPageAnimActivity extends Activity {
         );
         //动画周期为500ms
         signSet.setDuration(500).start();
+        signSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                playShakeAnim(ivAnimLayerSign, MSG_SIGN, OFFSET_SIGN, DURATION_SIGN);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 
     /**
@@ -304,6 +419,7 @@ public class BootPageAnimActivity extends Activity {
         if (ivAnimLayerFracture.getVisibility() != View.VISIBLE) {
             ivAnimLayerFracture.setVisibility(View.VISIBLE);
         }
+        ivAnimLayerFracture.clearAnimation();
 
         AnimatorSet fractureSet = new AnimatorSet();
         //包含平移、缩放和透明度动画
@@ -324,7 +440,55 @@ public class BootPageAnimActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+                playShakeAnim(ivAnimLayerFracture, MSG_FRACTURE, OFFSET_FRACTURE, DURATION_FRACTURE);
                 playTextOneAnimFirst();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
+    /**
+     * 播放"晃动"动画
+     */
+    private void playShakeAnim(View target, final int what, int offset, long duration) {
+        if (target != null) {
+            target.clearAnimation();
+        }
+
+        ObjectAnimator anim1 = getAnimTranslationX(target, 0, offset);
+        ObjectAnimator anim2 = getAnimTranslationY(target, 0, -offset);
+
+        ObjectAnimator anim3 = getAnimTranslationX(target, offset, 0);
+        ObjectAnimator anim4 = getAnimTranslationY(target, -offset, 0);
+
+        AnimatorSet shakeSet = new AnimatorSet();
+        shakeSet.play(anim1).with(anim2).before(anim3);
+        shakeSet.play(anim3).before(anim4);
+        shakeSet.play(anim4);
+
+        shakeSet.setDuration(duration).start();
+        shakeSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if (handler != null) {
+                    Message message = new Message();
+                    message.what = what;
+                    handler.sendMessage(message);
+                }
             }
 
             @Override
@@ -485,6 +649,29 @@ public class BootPageAnimActivity extends Activity {
         int [] xy = getLocation(ivAnimLayerThree);
         android.util.Log.w(TAG, "--------------> x = " + xy[0]);
         android.util.Log.w(TAG, "--------------> y = " + xy[1]);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        //清除View对应的动画对象
+        ivAnimLayerOne.clearAnimation();
+        ivAnimLayerTwo.clearAnimation();
+        ivAnimLayerThree.clearAnimation();
+        ivAnimLayerFour.clearAnimation();
+        ivAnimLayerGlobalPurchase.clearAnimation();
+        ivAnimLayerMutualAidCircle.clearAnimation();
+        ivAnimLayerSign.clearAnimation();
+        ivAnimLayerFracture.clearAnimation();
+        ivAnimLayerTextOne.clearAnimation();
+        ivAnimLayerTextTwo.clearAnimation();
+
+        scaleAnimationFirst.cancel();
+        scaleAnimationSecond.cancel();
+
+        handler = null;
     }
 
     /**
@@ -539,5 +726,16 @@ public class BootPageAnimActivity extends Activity {
      */
     private ObjectAnimator getAnimTranslationY(View target, float... values) {
         return ObjectAnimator.ofFloat(target, "translationY", values);
+    }
+
+    /**
+     * 获取旋转动画
+     *
+     * @param target
+     * @param values
+     * @return
+     */
+    private ObjectAnimator getAnimRotation(View target, float... values) {
+        return ObjectAnimator.ofFloat(target, "rotation", values);
     }
 }
