@@ -12,6 +12,33 @@
         android:layout_marginBottom="120dp"
         android:src="@drawable/boot_page_img_base" />
 
+    <ImageView
+        android:id="@+id/iv_anim_layer_line_one"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="60dp"
+        android:layout_gravity="right"
+        android:src="@drawable/boot_page_img_line_one"/>
+
+    <ImageView
+        android:id="@+id/iv_anim_layer_line_two"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="175dp"
+        android:layout_gravity="bottom"
+        android:src="@drawable/boot_page_img_line_one"/>
+
+    <ImageView
+        android:id="@+id/iv_anim_layer_light_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:src="@drawable/boot_page_img_light_effect"
+        android:visibility="gone"/>
+
     <com.lily.animation.view.XModeImageView
         android:id="@+id/iv_anim_layer_two"
         android:layout_width="wrap_content"

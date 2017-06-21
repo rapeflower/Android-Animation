@@ -27,9 +27,12 @@ import static android.content.ContentValues.TAG;
 public class BootPageAnimActivity extends Activity {
 
     ImageView ivAnimLayerOne;
+    ImageView ivAnimLayerLineOne;
+    ImageView ivAnimLayerLineTwo;
     XModeImageView ivAnimLayerTwo;
     ImageView ivAnimLayerThree;
     ImageView ivAnimLayerFour;
+    ImageView ivAnimLayerLightEffect;
     ImageView ivAnimLayerGlobalPurchase;//'全球购'
     ImageView ivAnimLayerMutualAidCircle;//'互助圈'
     ImageView ivAnimLayerSign;//'签到'
@@ -102,10 +105,12 @@ public class BootPageAnimActivity extends Activity {
      */
     private void initWidget() {
         ivAnimLayerOne = (ImageView) findViewById(R.id.iv_anim_layer_one);
+        ivAnimLayerLineOne = (ImageView) findViewById(R.id.iv_anim_layer_line_one);
+        ivAnimLayerLineTwo = (ImageView) findViewById(R.id.iv_anim_layer_line_two);
         ivAnimLayerTwo = (XModeImageView) findViewById(R.id.iv_anim_layer_two);
         ivAnimLayerThree = (ImageView) findViewById(R.id.iv_anim_layer_three);
         ivAnimLayerFour = (ImageView) findViewById(R.id.iv_anim_layer_four);
-
+        ivAnimLayerLightEffect = (ImageView) findViewById(R.id.iv_anim_layer_light_effect);
         ivAnimLayerGlobalPurchase = (ImageView) findViewById(R.id.iv_anim_layer_global_purchase);
         ivAnimLayerMutualAidCircle = (ImageView) findViewById(R.id.iv_anim_layer_mutual_aid_circle);
         ivAnimLayerSign = (ImageView) findViewById(R.id.iv_anim_layer_sign);
@@ -189,6 +194,8 @@ public class BootPageAnimActivity extends Activity {
 
         ivAnimLayerTwo.clearAnimation();
         ivAnimLayerTwo.startAnimation(scaleAnimationFirst);
+
+        playLineAnimFirst();
     }
 
     /**
@@ -200,6 +207,41 @@ public class BootPageAnimActivity extends Activity {
 
         ivAnimLayerTwo.clearAnimation();
         ivAnimLayerTwo.startAnimation(scaleAnimationSecond);
+
+        playLineAnimSecond();
+    }
+
+    /**
+     * 线条的缩放动画第一段
+     */
+    private void playLineAnimFirst() {
+        constructLineAnim(ivAnimLayerLineOne, 1400, 0.3f, 1.0f);
+        constructLineAnim(ivAnimLayerLineTwo, 1400, 0.3f, 1.0f);
+    }
+
+    /**
+     * 线条的缩放动画第二段
+     */
+    private void playLineAnimSecond() {
+        constructLineAnim(ivAnimLayerLineOne, 600, 1.0f, 0.7f);
+        constructLineAnim(ivAnimLayerLineTwo, 600, 1.0f, 0.7f);
+    }
+
+    /**
+     * 创建线条缩放动画
+     */
+    private void constructLineAnim(View target, long duration, float... values) {
+        if (target != null) {
+            target.clearAnimation();
+        }
+
+        AnimatorSet lineSet = new AnimatorSet();
+        lineSet.playTogether(
+                getAnimScaleX(target, values),
+                getAnimScaleY(target, values)
+        );
+        //动画周期为500ms
+        lineSet.setDuration(duration).start();
     }
 
     /**
@@ -441,6 +483,7 @@ public class BootPageAnimActivity extends Activity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 playShakeAnim(ivAnimLayerFracture, MSG_FRACTURE, OFFSET_FRACTURE, DURATION_FRACTURE);
+                playLightEffect();
                 playTextOneAnimFirst();
             }
 
@@ -501,6 +544,26 @@ public class BootPageAnimActivity extends Activity {
 
             }
         });
+    }
+
+    /**
+     * 播放"光效"动画
+     */
+    private void playLightEffect() {
+        if (ivAnimLayerLightEffect.getVisibility() != View.VISIBLE) {
+            ivAnimLayerLightEffect.setVisibility(View.VISIBLE);
+        }
+
+        ObjectAnimator animScaleX = getAnimScaleX(ivAnimLayerLightEffect, 0.8f, 0.8f);
+        ObjectAnimator animScaleY = getAnimScaleY(ivAnimLayerLightEffect, 0.8f, 0.8f);
+        ObjectAnimator animAlpha = getAnimAlpha(ivAnimLayerLightEffect, 0.0f, 0.25f ,0.5f, 0.75f,1f);
+        ObjectAnimator animTranslationX = getAnimTranslationX(ivAnimLayerLightEffect, -600, 0);
+        ObjectAnimator animTranslationY = getAnimTranslationY(ivAnimLayerLightEffect, 600, 0);
+
+        AnimatorSet lightEffectSet = new AnimatorSet();
+        lightEffectSet.playTogether(animScaleX, animScaleY, animAlpha, animTranslationX, animTranslationY);
+        //动画周期为500ms
+        lightEffectSet.setDuration(700).start();
     }
 
     /**
