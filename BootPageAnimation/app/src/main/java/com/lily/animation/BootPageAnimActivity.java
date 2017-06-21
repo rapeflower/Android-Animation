@@ -324,7 +324,7 @@ public class BootPageAnimActivity extends Activity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                playTextOneAnim();
+                playTextOneAnimFirst();
             }
 
             @Override
@@ -340,7 +340,67 @@ public class BootPageAnimActivity extends Activity {
     }
 
     /**
+     * 播放"全新首页"第一段Alpha渐变动画
+     */
+    private void playTextOneAnimFirst() {
+        //全新首页的图片动画
+        if (ivAnimLayerTextOne.getVisibility() != View.VISIBLE) {
+            ivAnimLayerTextOne.setVisibility(View.VISIBLE);
+        }
+
+        ObjectAnimator animScaleXOne = getAnimScaleX(ivAnimLayerTextOne, 0.6f, 0.6f);
+        ObjectAnimator animScaleYOne = getAnimScaleY(ivAnimLayerTextOne, 0.6f, 0.6f);
+        ObjectAnimator animAlpha = getAnimAlpha(ivAnimLayerTextOne, 0.0f, 0.25f ,0.5f, 0.75f,1f);
+
+        AnimatorSet animatorSetFirst = new AnimatorSet();
+        animatorSetFirst.play(animScaleXOne).with(animScaleYOne).with(animAlpha);
+        //动画周期为500ms
+        animatorSetFirst.setDuration(200).start();
+        animatorSetFirst.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                playTextOneAnimSecond();
+                playTextTwoAnim();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
+    /**
+     * 播放"全新首页"第二段TranslationY动画
+     */
+    private void playTextOneAnimSecond() {
+        //全新首页的图片动画
+        if (ivAnimLayerTextOne.getVisibility() != View.VISIBLE) {
+            ivAnimLayerTextOne.setVisibility(View.VISIBLE);
+        }
+
+        ObjectAnimator animTranslationXOne = getAnimTranslationX(ivAnimLayerTextOne, 0, 0);
+        ObjectAnimator animTranslationYOne = getAnimTranslationY(ivAnimLayerTextOne, 0, -80);
+
+        AnimatorSet animatorSetSecond = new AnimatorSet();
+        animatorSetSecond.play(animTranslationXOne).with(animTranslationYOne);
+        //动画周期为500ms
+        animatorSetSecond.setDuration(500).start();
+    }
+
+    /**
      * 播放'全新首页'图片动画
+     * @descripe 以下动画实现方式被采用属性动画：playTextOneAnimFirst() 和 playTextOneAnimSecond()替换
      */
     private void playTextOneAnim() {
         //全新首页的图片动画
@@ -411,28 +471,6 @@ public class BootPageAnimActivity extends Activity {
         );
         //动画周期为300ms
         textTwoSet.setDuration(500).start();
-
-        textTwoSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
     }
 
     /**
@@ -447,5 +485,59 @@ public class BootPageAnimActivity extends Activity {
         int [] xy = getLocation(ivAnimLayerThree);
         android.util.Log.w(TAG, "--------------> x = " + xy[0]);
         android.util.Log.w(TAG, "--------------> y = " + xy[1]);
+    }
+
+    /**
+     * 获取X轴方向缩放动画
+     *
+     * @param target
+     * @param values
+     */
+    private ObjectAnimator getAnimScaleX(View target, float... values) {
+        return ObjectAnimator.ofFloat(target, "scaleX", values);
+    }
+
+    /**
+     * 获取Y轴方向缩放动画
+     *
+     * @param target
+     * @param values
+     * @return
+     */
+    private ObjectAnimator getAnimScaleY(View target, float... values) {
+        return ObjectAnimator.ofFloat(target, "scaleY", values);
+    }
+
+    /**
+     * 获取Alpha动画
+     *
+     * @param target
+     * @param values
+     * @return
+     */
+    private ObjectAnimator getAnimAlpha(View target, float... values) {
+        return ObjectAnimator.ofFloat(target, "alpha", values);
+    }
+
+    /**
+     * 获取X轴方向平移动画
+     *
+     * @param target
+     * @param values
+     * @return
+     */
+    private ObjectAnimator getAnimTranslationX(View target, float... values) {
+        return ObjectAnimator.ofFloat(target, "translationX", values);
+    }
+
+    /**
+     * 获取Y轴方向平移动画
+     *
+     * @param target
+     * @param values
+     * @return
+     */
+    private ObjectAnimator getAnimTranslationY(View target, float... values) {
+        return ObjectAnimator.ofFloat(target, "translationY", values);
     }
 }
