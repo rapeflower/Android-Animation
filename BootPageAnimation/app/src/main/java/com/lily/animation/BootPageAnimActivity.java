@@ -215,16 +215,16 @@ public class BootPageAnimActivity extends Activity {
      * 线条的缩放动画第一段
      */
     private void playLineAnimFirst() {
-        constructLineAnim(ivAnimLayerLineOne, 1400, 0.3f, 1.0f);
-        constructLineAnim(ivAnimLayerLineTwo, 1400, 0.3f, 1.0f);
+        constructLineAnim(ivAnimLayerLineOne, 1400, 0.3f, 0.8f);
+        constructLineAnim(ivAnimLayerLineTwo, 1400, 0.3f, 0.8f);
     }
 
     /**
      * 线条的缩放动画第二段
      */
     private void playLineAnimSecond() {
-        constructLineAnim(ivAnimLayerLineOne, 600, 1.0f, 0.7f);
-        constructLineAnim(ivAnimLayerLineTwo, 600, 1.0f, 0.7f);
+        constructLineAnim(ivAnimLayerLineOne, 600, 0.8f, 0.6f);
+        constructLineAnim(ivAnimLayerLineTwo, 600, 0.8f, 0.6f);
     }
 
     /**
