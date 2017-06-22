@@ -74,15 +74,26 @@ public class XModeImageView extends ImageView{
 
         setLayerType(LAYER_TYPE_HARDWARE, null);
         if (isNeedDraw) {
-
             android.util.Log.w(TAG, "getWidth = " + newBitmap.getWidth());
             android.util.Log.w(TAG, "getHeight = " + newBitmap.getHeight());
 
             float left = (float) (getWidth() - newBitmap.getWidth()) / 2;
             float top = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
             android.util.Log.w(TAG, "dy 2 = " + dy);
-//            canvas.translate(0, dy);
+            canvas.save();
+            canvas.translate(0, dy);
             canvas.drawBitmap(newBitmap, left, top, mPaint);
+            canvas.restore();
+
+            if (base > 200) {
+                return;
+            } else {
+                base = base + 20;
+                android.util.Log.w(TAG, "base 2 = " + base);
+                dy = getHeight() / 2 - base;
+
+                invalidate();
+            }
         }
     }
 
@@ -102,6 +113,7 @@ public class XModeImageView extends ImageView{
     public void startDrawMobilePhonePic(boolean isNeedDraw, int parameter) {
         this.isNeedDraw = isNeedDraw;
         this.param = parameter;
+        invalidate();
 
 //        if (mAttached) {
 //            post(r);
@@ -109,7 +121,6 @@ public class XModeImageView extends ImageView{
 //            Handler handler = new Handler();
 //            handler.post(r);
 //        }
-        invalidate();
     }
 
     private Runnable r = new Runnable() {
