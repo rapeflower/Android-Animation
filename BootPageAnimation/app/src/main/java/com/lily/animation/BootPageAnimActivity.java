@@ -17,8 +17,6 @@ import android.widget.ImageView;
 
 import com.lily.animation.view.XModeImageView;
 
-import static android.R.attr.translationX;
-import static android.R.attr.translationY;
 import static android.content.ContentValues.TAG;
 
 /**
@@ -175,7 +173,7 @@ public class BootPageAnimActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
                 android.util.Log.w(TAG, "--------------> Second onAnimationEnd");
                 ivAnimLayerTwo.startDrawMobilePhonePic(true, 0);
-                playHandAnim();
+//                playHandAnim();
             }
 
             @Override
@@ -307,9 +305,7 @@ public class BootPageAnimActivity extends Activity {
         homeSet.playTogether(
                 ObjectAnimator.ofFloat(ivAnimLayerThree, "scaleX", 0.5f, 0.5f),
                 ObjectAnimator.ofFloat(ivAnimLayerThree, "scaleY", 0.5f, 0.5f),
-                ObjectAnimator.ofFloat(ivAnimLayerThree, "alpha", 0.0f, 0.25f ,0.5f, 0.75f,1f),
-                ObjectAnimator.ofFloat(ivAnimLayerThree, "translationX", translationX, 0),
-                ObjectAnimator.ofFloat(ivAnimLayerThree, "translationY", translationY, 0)
+                ObjectAnimator.ofFloat(ivAnimLayerThree, "alpha", 0.0f, 0.25f ,0.5f, 0.75f,1f)
         );
         //动画周期为500ms
         homeSet.setDuration(300).start();
