@@ -1,5 +1,8 @@
 package com.lily.animation.view;
 
+import android.animation.ObjectAnimator;
+import android.animation.TypeEvaluator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +17,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.lily.animation.R;
+import com.lily.animation.model.Point;
 
 import static android.content.ContentValues.TAG;
 
@@ -23,12 +27,11 @@ import static android.content.ContentValues.TAG;
 public class XModeImageView extends ImageView{
 
     private Paint mPaint;
-    private int param = 0;
     private boolean isNeedDraw = false;
     Bitmap originBitmap = null;
     Bitmap newBitmap = null;
-    float dy = Float.NaN;
-    boolean mAttached = false;
+
+    private Point currentPoint;
 
     public XModeImageView(Context context) {
         this(context, null);
@@ -63,9 +66,6 @@ public class XModeImageView extends ImageView{
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        //
-        dy = getHeight() / 2 - 100;
-        android.util.Log.w(TAG, "dy 1 = " + dy);
     }
 
     @Override
@@ -74,56 +74,73 @@ public class XModeImageView extends ImageView{
 
         setLayerType(LAYER_TYPE_HARDWARE, null);
         if (isNeedDraw) {
+//            android.util.Log.w(TAG, "getWidth = " + newBitmap.getWidth());
+//            android.util.Log.w(TAG, "getHeight = " + newBitmap.getHeight());
 
-            android.util.Log.w(TAG, "getWidth = " + newBitmap.getWidth());
-            android.util.Log.w(TAG, "getHeight = " + newBitmap.getHeight());
-
-            float left = (float) (getWidth() - newBitmap.getWidth()) / 2;
-            float top = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
-            android.util.Log.w(TAG, "dy 2 = " + dy);
-//            canvas.translate(0, dy);
-            canvas.drawBitmap(newBitmap, left, top, mPaint);
+            if (currentPoint == null) {
+                float x = (float) (getWidth() - newBitmap.getWidth()) / 2;
+                float y = (float) getHeight() / 2 + newBitmap.getHeight() / 2;
+                currentPoint = new Point(x, y);
+                drawBitmap(canvas);
+                startAnimation();
+            } else {
+                drawBitmap(canvas);
+            }
         }
     }
 
-//    private void startAnim() {
-//        ScaleAnimation scaleAnimationFirst = new ScaleAnimation(0.0f, 0.9f, 0.0f, 0.9f,
-//                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-//        scaleAnimationFirst.setDuration(1000);//设置动画持续时间
-//        scaleAnimationFirst.setFillAfter(true);//动画执行完后是否停留在执行完的状态
-//        scaleAnimationFirst.setStartOffset(1000);//执行前的等待时间
-//    }
+    private void drawBitmap(Canvas canvas) {
+//        float left = (float) (getWidth() - newBitmap.getWidth()) / 2;
+//        float top = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
+
+        float left = currentPoint.getX();
+        float top = currentPoint.getY();
+
+        canvas.drawBitmap(newBitmap, left, top, mPaint);
+    }
+
+    private void startAnimation() {
+        float x = (float) (getWidth() - newBitmap.getWidth()) / 2;
+        Point startPoint = new Point(x, (float) (getHeight() / 2 + newBitmap.getHeight() / 2));
+
+        float endPointY = (float) getHeight() / 2 - newBitmap.getHeight() / 3;
+        Point endPoint = new Point(x, endPointY);
+        //ObjectAnimator animator = ObjectAnimator.ofObject(TypeEvaluator evaluator, Object... values)
+        ValueAnimator anim = ValueAnimator.ofObject(new PointEvaluator(), startPoint, endPoint);
+        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                currentPoint = (Point) animation.getAnimatedValue();
+                invalidate();
+            }
+        });
+        anim.setDuration(300);
+        anim.start();
+    }
+
+    public class PointEvaluator implements TypeEvaluator {
+
+        @Override
+        public Object evaluate(float fraction, Object startValue, Object endValue) {
+            android.util.Log.w("PointEvaluator", "fraction = " + fraction);
+            Point startPoint = (Point) startValue;
+            Point endPoint = (Point) endValue;
+            float x = startPoint.getX();// startPoint.getX() = endPoint.getX()
+            float y = startPoint.getY() - fraction * (startPoint.getY() - endPoint.getY());
+            Point point = new Point(x, y);
+            return point;
+        }
+
+    }
 
     /**
      *
      * @param isNeedDraw
      */
-    int base = 100;
     public void startDrawMobilePhonePic(boolean isNeedDraw, int parameter) {
         this.isNeedDraw = isNeedDraw;
-        this.param = parameter;
-
-//        if (mAttached) {
-//            post(r);
-//        } else {
-//            Handler handler = new Handler();
-//            handler.post(r);
-//        }
         invalidate();
     }
-
-    private Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            android.util.Log.w(TAG, "base 1 = " + base);
-            if (base > 200) {
-                return;
-            }
-            base = base + 20;
-            android.util.Log.w(TAG, "base 2 = " + base);
-            dy = getHeight() / 2 - base;
-        }
-    };
 
     /**
      * 按比例缩放图片
@@ -149,15 +166,4 @@ public class XModeImageView extends ImageView{
         return newBM;
     }
 
-    @Override
-    protected void onAttachedToWindow() {
-        super.onAttachedToWindow();
-        mAttached = true;
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        mAttached = false;
-    }
 }
