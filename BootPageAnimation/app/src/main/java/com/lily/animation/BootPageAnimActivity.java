@@ -173,7 +173,7 @@ public class BootPageAnimActivity extends Activity {
             public void onAnimationEnd(Animation animation) {
                 android.util.Log.w(TAG, "--------------> Second onAnimationEnd");
                 ivAnimLayerTwo.startDrawMobilePhonePic(true, 0);
-//                playHandAnim();
+                playHandAnim();
             }
 
             @Override
