@@ -1,6 +1,5 @@
 package com.lily.animation.view;
 
-import android.animation.ObjectAnimator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -17,9 +16,6 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.lily.animation.R;
-import com.lily.animation.model.Point;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by Author on 17/6/19.

@@ -9,10 +9,6 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.lily.animation.model.Point;
-
-import static android.content.ContentValues.TAG;
-
 /**
  * Created by lilei on 2017/6/22.
  */

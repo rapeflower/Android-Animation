@@ -1,6 +1,5 @@
 package com.lily.animation.view;
 
-import android.animation.PointFEvaluator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -9,8 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
-
-import com.lily.animation.model.Point;
 
 /**
  * Created by lilei on 2017/6/22.

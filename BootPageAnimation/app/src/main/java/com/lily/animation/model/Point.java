@@ -1,14 +1,14 @@
 package com.lily.animation.model;
 
 /**
- * Created by lilei on 2017/6/22.
+ * @author rape flower
+ * @Date 2017-06-22 14:01
+ * @descripe 坐标点类
  */
-
 public class Point {
 
-    private float x;
-
-    private float y;
+    private float x;//x坐标
+    private float y;//y坐标
 
     public Point(float x, float y) {
         this.x = x;

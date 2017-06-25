@@ -2,6 +2,8 @@ package com.lily.animation.guideview;
 
 import android.animation.TypeEvaluator;
 
+import com.lily.animation.model.Point;
+
 /**
  * @author rape flower
  * @Date 2017-06-22 14:18

@@ -15,6 +15,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.lily.animation.R;
+import com.lily.animation.model.Point;
 
 
 /**
