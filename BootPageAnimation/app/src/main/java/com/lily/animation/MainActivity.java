@@ -17,7 +17,7 @@ public class MainActivity extends ListActivity {
         getListView().setAdapter(
                 new ArrayAdapter<String>(this,
                         android.R.layout.simple_list_item_1, new String[] {
-                        "自定义动画View", "引导页动画"}));
+                        "自定义动画View", "引导页动画", "PropertyValuesHolder"}));
 
     }
 
@@ -27,8 +27,10 @@ public class MainActivity extends ListActivity {
         Intent intent = null;
         if (position == 0) {
             intent = new Intent(this, CustomAnimViewActivity.class);
-        } else {
+        } else if (position == 1) {
             intent = new Intent(this, BootPageAnimActivity.class);
+        } else {
+            intent = new Intent(this, TestAnimActivity3.class);
         }
         startActivity(intent);
     }

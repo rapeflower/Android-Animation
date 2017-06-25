@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".CustomAnimViewActivity" />
         <activity android:name=".BootPageAnimActivity" />
+        <activity android:name=".TestAnimActivity3" />
     </application>
 
 </manifest>

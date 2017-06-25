@@ -3,6 +3,7 @@ package com.lily.animation;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -180,5 +181,46 @@ public class TestAnimActivity2 extends Activity {
 
     public void startAnim(View view) {
         playBaseAnimFirst();
+    }
+
+    /**
+     * Android属性动画优化（更高效的使用属性动画）
+     * <p>
+     *    http://blog.csdn.net/rentee/article/details/52251829
+     * </p>
+     * 使用PropertyValuesHolder
+     */
+    private void animValueHolder() {
+        PropertyValuesHolder pvhX = PropertyValuesHolder.ofFloat("scaleX", 0.6f, 0.6f);
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("scaleY", 0.6f, 0.6f);
+        PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0.25f, 0.5f, 0.75f,1f);
+        PropertyValuesHolder pvhTX = PropertyValuesHolder.ofFloat("translationX", 80, 0);
+        PropertyValuesHolder pvhTY = PropertyValuesHolder.ofFloat("translationY", 80, 0);
+
+        ObjectAnimator animator = ObjectAnimator.ofPropertyValuesHolder(ivAnimLayerOne, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        animator.start();
+        //设置动画监听
+        animator.addListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
     }
 }
