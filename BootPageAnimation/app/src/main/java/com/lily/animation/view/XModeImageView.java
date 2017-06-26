@@ -16,6 +16,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.lily.animation.R;
+import com.lily.animation.model.Point;
 
 /**
  * Created by Author on 17/6/19.

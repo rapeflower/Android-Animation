@@ -276,7 +276,7 @@ public class GuidePageAnimView extends FrameLayout{
 
         PropertyValuesHolder pvhX = AnimHelper.getPVHAnimScaleX(values);
         PropertyValuesHolder pvhY = AnimHelper.getPVHAnimScaleY(values);
-        ObjectAnimator animator = AnimHelper.createPropertyValuesHolder(target, pvhX, pvhY);
+        ObjectAnimator animator = AnimHelper.createObjectAnimator(target, pvhX, pvhY);
         animator.setDuration(duration);
         animator.start();
     }
@@ -298,7 +298,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(translationX, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(translationY, 0);
 
-        ObjectAnimator animator = AnimHelper.createPropertyValuesHolder(ivAnimLayerFour, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator animator = AnimHelper.createObjectAnimator(ivAnimLayerFour, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         animator.setDuration(DURATION_HAND);
         animator.start();
         //为动画加上事件监听，当动画结束的时候，开始另一个动画
@@ -342,7 +342,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhY = AnimHelper.getPVHAnimScaleY(0.5f, 0.5f);
         PropertyValuesHolder pvhAlpha = AnimHelper.getPVHAnimAlpha(0.25f, 0.5f, 0.75f, 1f);
 
-        ObjectAnimator homeAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerThree, pvhX, pvhY, pvhAlpha);
+        ObjectAnimator homeAnimator = AnimHelper.createObjectAnimator(ivAnimLayerThree, pvhX, pvhY, pvhAlpha);
         homeAnimator.setDuration(DURATION_HOME);
         homeAnimator.start();
     }
@@ -370,7 +370,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(-100, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(560, 0);
 
-        ObjectAnimator globalPurchaseAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerGlobalPurchase, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator globalPurchaseAnimator = AnimHelper.createObjectAnimator(ivAnimLayerGlobalPurchase, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         globalPurchaseAnimator.setDuration(DURATION_GP_MAC_S_F);
         globalPurchaseAnimator.start();
         globalPurchaseAnimator.addListener(new Animator.AnimatorListener() {
@@ -413,7 +413,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(280, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(330, 0);
 
-        ObjectAnimator mutualAidCircleAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerMutualAidCircle, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator mutualAidCircleAnimator = AnimHelper.createObjectAnimator(ivAnimLayerMutualAidCircle, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         mutualAidCircleAnimator.setDuration(DURATION_GP_MAC_S_F);
         mutualAidCircleAnimator.start();
         mutualAidCircleAnimator.addListener(new Animator.AnimatorListener() {
@@ -456,7 +456,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(240, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(-100, 0);
 
-        ObjectAnimator signAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerSign, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator signAnimator = AnimHelper.createObjectAnimator(ivAnimLayerSign, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         signAnimator.setDuration(DURATION_GP_MAC_S_F);
         signAnimator.start();
         signAnimator.addListener(new Animator.AnimatorListener() {
@@ -499,7 +499,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(-320, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(260, 0);
 
-        ObjectAnimator fractureAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerFracture, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator fractureAnimator = AnimHelper.createObjectAnimator(ivAnimLayerFracture, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         fractureAnimator.setDuration(DURATION_GP_MAC_S_F);
         fractureAnimator.start();
         fractureAnimator.addListener(new Animator.AnimatorListener() {
@@ -589,7 +589,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(-600, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(600, 0);
 
-        ObjectAnimator lightEffectAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerLightEffect, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator lightEffectAnimator = AnimHelper.createObjectAnimator(ivAnimLayerLightEffect, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         lightEffectAnimator.setDuration(DURATION_LIGHT_EFFECT);
         lightEffectAnimator.start();
     }
@@ -608,7 +608,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhY = AnimHelper.getPVHAnimScaleY(0.6f, 0.6f);
         PropertyValuesHolder pvhAlpha = AnimHelper.getPVHAnimAlpha(0.0f, 0.25f ,0.5f, 0.75f, 1f);
 
-        ObjectAnimator animatorFirst = AnimHelper.createPropertyValuesHolder(ivAnimLayerTextOne, pvhX, pvhY, pvhAlpha);
+        ObjectAnimator animatorFirst = AnimHelper.createObjectAnimator(ivAnimLayerTextOne, pvhX, pvhY, pvhAlpha);
         animatorFirst.setDuration(DURATION_FIRST_NHP);
         animatorFirst.start();
         animatorFirst.addListener(new Animator.AnimatorListener() {
@@ -648,7 +648,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(0, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(0, -80);
 
-        ObjectAnimator animatorSecond = AnimHelper.createPropertyValuesHolder(ivAnimLayerTextOne, pvhTX, pvhTY);
+        ObjectAnimator animatorSecond = AnimHelper.createObjectAnimator(ivAnimLayerTextOne, pvhTX, pvhTY);
         animatorSecond.setDuration(DURATION_SECOND_NHP);
         animatorSecond.start();
     }
@@ -722,7 +722,7 @@ public class GuidePageAnimView extends FrameLayout{
         PropertyValuesHolder pvhTX = AnimHelper.getPVHAnimTranslationX(0, 0);
         PropertyValuesHolder pvhTY = AnimHelper.getPVHAnimTranslationY(0, -80);
 
-        ObjectAnimator textTwoAnimator = AnimHelper.createPropertyValuesHolder(ivAnimLayerTextTwo, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
+        ObjectAnimator textTwoAnimator = AnimHelper.createObjectAnimator(ivAnimLayerTextTwo, pvhX, pvhY, pvhAlpha, pvhTX, pvhTY);
         textTwoAnimator.setDuration(DURATION_SECOND_NHP);
         textTwoAnimator.start();
     }

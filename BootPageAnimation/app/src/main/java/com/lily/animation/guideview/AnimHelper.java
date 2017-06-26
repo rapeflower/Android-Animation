@@ -154,7 +154,7 @@ public class AnimHelper {
      * @param values 动画值
      * @return
      */
-    public static ObjectAnimator createPropertyValuesHolder(View target, PropertyValuesHolder... values) {
+    public static ObjectAnimator createObjectAnimator(View target, PropertyValuesHolder... values) {
         return ObjectAnimator.ofPropertyValuesHolder(target, values);
     }
 }
